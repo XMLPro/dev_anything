@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>家計簿</title>
+
+    <meta name="theme-color" content="#EE6E73">
+    <!-- CSS-->
+    <link href="{{ url_for('static',filename = 'css/prism.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename = 'css/ghpages-materialize.css') }}" type="text/css" rel="stylesheet"
+          media="screen,projection">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo center">家計簿</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href=""></a><i class="material-icons">
+                    add
+                </i></li>
+                <li><a href="{{url_for('login')}}">ログイン</a></li>
+                <li><a href="{{ url_for('u_set') }}">設定</a></li>
+            </ul>
+
+            <ul id="nav-mobile dropdown-button" class="left ">
+                <li>
+                    <a class="dropdown-button" href="#!" data-activates="dropdown1" style="width: 200px">
+                        <i class="material-icons">
+                            reorder
+                        </i>
+                    </a>
+                </li>
+                <ul id='dropdown1' class='dropdown-content'>
+                    <li class="bold disabled">
+                        <a>
+
+                        </a>
+                    </li>
+                    <li class="bold disabled">
+                        <a>
+
+                        </a>
+                    </li>
+
+                    <li class="bold">
+                        <a href="#!" class="waves-effect waves-teal">
+                            統計
+                        </a>
+                    </li>
+                    <li class="bold">
+                        <a href="{{url_for('check_i')}}" class="waves-effect waves-teal">
+                            収入確認
+                        </a>
+                    </li>
+                    <li class="bold">
+                        <a href="{{url_for('check_o')}}" class="waves-effect waves-teal">
+                            支出確認
+                        </a>
+                    </li>
+                    <li class="bold">
+                        <a href="{{url_for('add_i')}}" class="waves-effect waves-teal">
+                            収入入力
+                        </a>
+                    </li>
+                    <li class="bold">
+                        <a href="{{url_for('add_o')}}" class="waves-effect waves-teal">
+                            支出入力
+                        </a>
+                    </li>
+                    <li class="bold">
+                        <a href="{{url_for('share')}}" class="waves-effect waves-teal">
+                            共有設定
+                        </a>
+                    </li>
+                    <li class="bold">
+                        <a href="{{url_for('u_set')}}" class="waves-effect waves-teal">
+                            ユーザー設定
+                        </a>
+                    </li>
+                    <li class="bold">
+                        <a href="{{ url_for('g_login') }}" class="waves-effect waves-teal">
+                            グループ
+                        </a>
+                    </li>
+                    <li class="bold">
+                        <a href="{{url_for('login')}}" class="waves-effect waves-teal">
+                            ログイン
+                        </a>
+                    </li>
+                </ul>
+            </ul>
+
+        </div>
+
+    </nav>
+</header>
+<main>
+    <div class="container">
+        <div class="row">
+                {% block body_main %}{% endblock %}
+        </div>
+    </div>
+</main>
+<footer class="page-footer">
+
+</footer>
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{{ url_for('static',filename ='js/jquery.timeago.min.js') }}"></script>
+<script src="{{ url_for('static',filename ='js/prism.js') }}"></script>
+<script src="{{ url_for('static',filename ='js/materialize.js') }}"></script>
+<script src="{{ url_for('static',filename ='js/init.js') }}"></script>
+
+</body>
+</html>
