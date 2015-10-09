@@ -26,6 +26,13 @@ class SpendTableManage:
         self.dbc.execute("UPDATE spend SET itemName=? ,money=?,daydata=?,text=? WHERE id = ? and userName=?;", data)
         self.db.commit()
 
+    def shareget(self,id):
+        userData = self.dbc.execute("select * from spend where id = ?", (id,))
+        entries = [dict(id=row[0], itemName=row[2], money=row[3], day=row[4], text=row[5]) for row in
+                   userData.fetchall()]
+        return entries
+
+
 
     def uniqueSerch(self,id):
        idData= self.dbc.execute("select * from spend where id = ?", (id,))

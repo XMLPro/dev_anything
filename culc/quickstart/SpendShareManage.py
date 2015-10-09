@@ -12,7 +12,7 @@ class SpendShareManage:
         self.db.commit()
 
     def entrySerch(self, userName):
-        userData = self.dbc.execute("select * from spendShare where userName = ?", (userName,))
+        userData = self.dbc.execute("select * from spendShare where recipient = ?", (userName,))
         entries = [dict(sender=row[0], recipient=row[1], itemName=row[2], itemID=row[3]) for row in
                    userData.fetchall()]
         return entries

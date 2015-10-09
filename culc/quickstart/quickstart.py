@@ -233,13 +233,18 @@ def check_friend():
     return render_template('check_friend.html', friend=check_fri)
 
 
-@app.route('/userValid', methods=['POST',"GET"])
-@reqire_login
-def check_userVaild():
-    result =[request.form["fieldid"],False,"Ok"]
-    if (g.user.userValid(request.form['username'])):
-        return json.dumps({'','status':'OK','user':user,'pass':password});
-    return result
+#
+@app.route('/check_sharespend', methods=['GET'])
+def check_sharespend():
+    list = []
+    check = g.share.entrySerch(session.get('username'))
+    for i in check:
+        list.extend(g.spend.shareget(i['itemID']))
+    for i in list:
+        print(i)
+        print(i['money'])
+    return render_template('check_sharespend.html', list=list)
+
 
 # グループ用の関数または、ページのレンダリング
 

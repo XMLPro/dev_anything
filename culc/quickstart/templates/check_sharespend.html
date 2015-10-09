@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block body_main %}
+    <h4>共有支出</h4>
+    <div class="row">
+        <div class="col s10 offset-s1">
+            <table class="highlight bordered">
+                <thead>
+                <tr>
+                    <th data-field="date">date</th>
+                    <th data-field="name">Item Name</th>
+                    <th data-field="price">Item Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for spend in list %}
+                    <tr class="context" id="{{ spend.id }}">
+                        <td>{{ spend.day }}</td>
+                        <td>{{ spend.itemName }}</td>
+                        <td>{{ spend.money }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>Nodata</td>
+                        <td>Nodata</td>
+                        <td>Nodata</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
