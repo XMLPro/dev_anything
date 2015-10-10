@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block body_main %}
+    <h4>友達申請</h4>
+    <form action="{{ url_for('notfication') }}" method="post">
+        <div class="row">
+            <div class="col s6 offset-s3">
+                <div class="card-panel">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="center">
+                                <p class="center-align">{{ friend }}が、あなたに友達の申請がきています</p>
+                                <button class="btn waves-effect waves-right" type="submit" name="add" value="Agree">Agree
+                                    <i class="material-icons right">send</i>
+                                </button>
+                                <button class="btn waves-effect waves-left" type="submit" name="remove" value="Disagree">Disagree
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block scriptarea %}
+    <script src="{{ url_for('static',filename ='js/jquery.contextmenu.r2.js') }}"></script>
+    <script src="{{ url_for('static',filename ='js/jquery.leanModal.min.js') }}"></script>
+    <script src="{{ url_for('static',filename ='js/check_outlayS.js') }}"></script>
+{% endblock %}
