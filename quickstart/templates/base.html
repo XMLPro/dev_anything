@@ -12,7 +12,10 @@
     <link href="{{ url_for('static',filename = 'css/prism.css') }}" rel="stylesheet">
     <link href="{{ url_for('static',filename = 'css/ghpages-materialize.css') }}" type="text/css" rel="stylesheet"
           media="screen,projection">
+    <link href="{{ url_for('static',filename = 'css/remodal.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename = 'css/remodal-default-theme.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
 <header>
@@ -23,7 +26,11 @@
                 <li><a href=""></a><i class="material-icons">
                     add
                 </i></li>
-                <li><a href="{{url_for('login')}}">ログイン</a></li>
+                {% if not session.logged_in %}
+                    <li><a href="{{ url_for('login') }}">ログイン</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('logaut') }}">ログアウト</a></li>
+                {% endif %}
                 <li><a href="{{ url_for('u_set') }}">設定</a></li>
             </ul>
 
@@ -53,44 +60,57 @@
                         </a>
                     </li>
                     <li class="bold">
-                        <a href="{{url_for('check_i')}}" class="waves-effect waves-teal">
+                        <a href="{{ url_for('check_i') }}" class="waves-effect waves-teal">
                             収入確認
                         </a>
                     </li>
                     <li class="bold">
-                        <a href="{{url_for('check_o')}}" class="waves-effect waves-teal">
+                        <a href="{{ url_for('check_o') }}" class="waves-effect waves-teal">
                             支出確認
                         </a>
                     </li>
                     <li class="bold">
-                        <a href="{{url_for('add_i')}}" class="waves-effect waves-teal">
+                        <a href="{{ url_for('add_i') }}" class="waves-effect waves-teal">
                             収入入力
                         </a>
                     </li>
                     <li class="bold">
-                        <a href="{{url_for('add_o')}}" class="waves-effect waves-teal">
+                        <a href="{{ url_for('add_o') }}" class="waves-effect waves-teal">
                             支出入力
                         </a>
                     </li>
                     <li class="bold">
-                        <a href="{{url_for('share')}}" class="waves-effect waves-teal">
+                        <a href="{{ url_for('share') }}" class="waves-effect waves-teal">
                             共有設定
                         </a>
                     </li>
                     <li class="bold">
-                        <a href="{{url_for('u_set')}}" class="waves-effect waves-teal">
+                        <a href="{{ url_for('u_set') }}" class="waves-effect waves-teal">
                             ユーザー設定
                         </a>
                     </li>
+                    <li class="bold">
+                        <a href="{{ url_for('check_friend') }}" class="waves-effect waves-teal">
+                            フレンド
+                        </a>
+                    </li>
+
                     <li class="bold">
                         <a href="{{ url_for('g_login') }}" class="waves-effect waves-teal">
                             グループ
                         </a>
                     </li>
                     <li class="bold">
-                        <a href="{{url_for('login')}}" class="waves-effect waves-teal">
-                            ログイン
-                        </a>
+                        {% if not session.logged_in %}
+                            <a href="{{ url_for('login') }}" class="waves-effect waves-teal">
+                                ログイン
+                            </a>
+                        {% else %}
+                            <a href="{{ url_for('logaut') }}" class="waves-effect waves-teal">
+                                ログアウト
+                            </a>
+                        {% endif %}
+
                     </li>
                 </ul>
             </ul>
@@ -102,7 +122,7 @@
 <main>
     <div class="container">
         <div class="row">
-                {% block body_main %}{% endblock %}
+            {% block body_main %}{% endblock %}
         </div>
     </div>
 </main>
@@ -110,11 +130,17 @@
 
 </footer>
 <!--  Scripts-->
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
 <script src="{{ url_for('static',filename ='js/jquery.timeago.min.js') }}"></script>
 <script src="{{ url_for('static',filename ='js/prism.js') }}"></script>
 <script src="{{ url_for('static',filename ='js/materialize.js') }}"></script>
 <script src="{{ url_for('static',filename ='js/init.js') }}"></script>
+<script src="{{ url_for('static',filename ='js/jquery.validationEngine.js') }}"></script>
+<script src="{{ url_for('static',filename ='js/jquery.validationEngine-ja.js') }}"></script>
+<link href="{{ url_for('static',filename = 'css/validationEngine.jquery.css') }}" rel="stylesheet" type="text/css"/>
+
+{% block scriptarea %}
+{% endblock %}
 
 </body>
 </html>

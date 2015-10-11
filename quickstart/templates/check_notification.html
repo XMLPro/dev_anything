@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block body_main %}
+    <h4>共有通知</h4>
+    <div class="row">
+        <div class="col s10 offset-s1">
+            <table class="highlight bordered">
+                <thead>
+                <tr>
+                    <th data-field="date">date</th>
+                    <th data-field="name">Item Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for noti in snotiData %}
+                    <tr class="context" id="{{ noti.itemID }}">
+                        <td>{{ noti.sender }}</td>
+                        <td>{{ noti.itemName }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>Nodata</td>
+                        <td>Nodata</td>
+                        <td>Nodata</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class='contextMenu' id='myMenu1'>
+        <ul>
+            <li id='edit'><a id="editmodal" href="#modalup">share</a></li>
+            <li id='delete'><a id="modaldelete" href="#deleteModal">delete</a></li>
+        </ul>
+    </div>
+
+    <div class="remodal" data-remodal-id="modalup" role="dialog" aria-labelledby="modal1Title"
+         aria-describedby="modal1Desc">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div>
+            <h3 id="modal1Title">確認</h3>
+
+            <form id="updatespend" class="col s12" action="{{ url_for('share_spend') }}" method="post">
+                <div class="row">
+                    追加しますか?
+                   <input type="hidden" name="shareId" class="share">
+                    <div class="col s12">
+                        <div class="right">
+                            <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+                            <button type="submit" name="action" class="remodal-confirm">
+                                submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="remodal" data-remodal-id="deleteModal" role="dialog" aria-labelledby="modal1Title"
+         aria-describedby="modal1Desc">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div>
+            <h3 id="modal1Title">支出削除</h3>
+
+            <form id="deletenoti" class="col s12" action="{{ url_for('delete_noti') }}" method="post">
+                本当に消しますか？
+                <input type='hidden' name='deleteId' class='delete'>
+                <div class="col s12">
+                    <div class="right">
+                        <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+                        <button type="submit" name="action" class="remodal-confirm">
+                            delete
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        </form>
+    </div>
+{% endblock %}
+{% block scriptarea %}
+    <script src="{{ url_for('static',filename ='js/jquery.leanModal.min.js') }}"></script>
+    <script src="{{ url_for('static',filename ='js/jquery.contextmenu.r2.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/remodal.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/notificationS.js') }}"></script>
+
+{% endblock %}

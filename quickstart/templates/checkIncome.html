@@ -12,31 +12,143 @@
                     <th data-field="date">date</th>
                     <th data-field="name">Item Name</th>
                     <th data-field="price">Item Price</th>
+                    <th data-field="comment">comment</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr>
-                    <td>4/14</td>
-                    <td>Eclair</td>
-                    <td>$0.87</td>
-                    <td class="btn">詳細</td>
+                {% for income in userincome %}
+                <tr  class="context" id="{{ income.id }}">
+                    <td>{{ income.day }}</td>
+                    <td>{{ income.itemName }}</td>
+                    <td>{{ income.money }}</td>
+                    <td>{{ income.text }}</td>
                 </tr>
+                {% else %}
                 <tr>
-                    <td>4/25</td>
-                    <td>Jellybean</td>
-                    <td>$3.76</td>
-                    <td class="btn">詳細</td>
+                    <td>Nodata</td>
+                    <td>Nodata</td>
+                    <td>Nodata</td>
+                    <td>Nodata</td>
                 </tr>
-                <tr>
-                    <td>5/2</td>
-                    <td>Lollipop</td>
-                    <td>$7.00</td>
-                    <td class="btn">詳細</td>
-                </tr>
+                {% endfor %}
                 </tbody>
             </table>
-
         </div>
     </div>
+     <div class='contextMenu' id='myMenu1'>
+        <ul>
+            <li id='edit'><a id="editmodal" href="#modalup">Edit</a></li>
+            <li id='delete'><a id="modaldelete" href="#deleteModal">delete</a></li>
+        </ul>
+    </div>
+
+    <div class="remodal" data-remodal-id="modalup" role="dialog" aria-labelledby="modal1Title"
+         aria-describedby="modal1Desc">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div>
+            <h3 id="modal1Title">収入更新</h3>
+
+            <form id="updatespend" class="col s12" action="{{ url_for('update_income') }}" method="post">
+                <div class="row">
+                    <input id="textarea0" type="hidden" name="uid">
+                    <div class="input-field col s5">
+                        <input id="textarea1" type="text" name="uitemName">
+                        <label for="textarea1">品名</label>
+                    </div>
+                    <!--<input type='hidden' name='itemId' class='update'>-->
+
+                    <div class="input-field col s5 offset-s1">
+                        <input id="textarea2" type="text" name="umoney">
+                        <label for="textarea2">金額</label>
+                    </div>
+                    <div class="input-field col s10 offset-s1">
+                        <input id="data" type="date" class="datepicker" name="uday">
+                    </div>
+                    <div class="input-field col s10 offset-s1">
+                        <i class="material-icons prefix">mode_edit</i>
+                        <textarea id="icon_prefix1" class="materialize-textarea" name="utext"></textarea>
+                        <label for="icon_prefix1">コメント</label>
+                    </div>
+                    <div class="col s12">
+                        <div class="right">
+                            <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+                            <button type="submit" name="action" class="remodal-confirm">
+                                submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="remodal" data-remodal-id="deleteModal" role="dialog" aria-labelledby="modal1Title"
+         aria-describedby="modal1Desc">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div>
+            <h3 id="modal1Title">収入削除</h3>
+
+            <form id="deletespend" class="col s12" action="{{ url_for('delete_income') }}" method="post">
+                本当に消しますか？
+                <input type='hidden' name='itemId' class='delete'>
+
+                <div class="col s12">
+                    <div class="right">
+                        <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+                        <button type="submit" name="action" class="remodal-confirm">
+                            delete
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        </form>
+    </div>
+
+{% endblock %}
+{% block scriptarea %}
+    <style>
+        #lean_overlay {
+            position: fixed;
+            z-index: 100;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            display: none;
+        }
+
+        #modalup {
+            width: 600px;
+            padding: 30px;
+            display: none;
+            background: #FFF;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.7);
+            -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+            -moz-box-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        #deleteModal {
+            width: 600px;
+            padding: 30px;
+            display: none;
+            background: #FFF;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.7);
+            -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+            -moz-box-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);
+        }
+
+    </style>
+    <script src="{{ url_for('static',filename ='js/jquery.leanModal.min.js') }}"></script>
+    <script src="{{ url_for('static',filename ='js/jquery.contextmenu.r2.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/remodal.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/check_incomeS.js') }}"></script>
 {% endblock %}
