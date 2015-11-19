@@ -3,40 +3,28 @@
     {{ super() }}
 {% endblock %}
 {% block body_main %}
-    <h4 xmlns="http://www.w3.org/1999/html">ログイン</h4>
+    <h4>ログイン</h4>
     <div class="row">
         <div class="col s6 offset-s3">
             <div class="card-panel">
-                <form id="g_login" action="{{ url_for('g_login') }}" method="post">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="groupname" type="text" class="validate[required]" name="groupname">
-                            <label for="groupname">groupname</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <input id=username" type="text" class="validate[required]" name="username">
-                            <label for="username">username</label>
-                        </div>
-                        <div class="col s12">
-                            <a href="{{ url_for('g_regi') }}">グループを作成していない</a>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="username" type="password" class="validate">
+                        <label for="username">GroupName</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="password" type="password" class="validate">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="col s12">
+                        <a href="{{ url_for('g_regi') }}">グループを作成する</a>
 
-                            <div class="right">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                                    <i class="material-icons right">send</i>
-                                </button>
-                            </div>
+                        <div class="right">
+                            <a class="waves-effect waves-light btn">ログイン</a>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-{% endblock %}
-{%block scriptarea%}
-{#<script type="text/javascript">#}
-{#$(function(){#}
-{#            $("#g_login").validationEngine();#}
-{#        }#}
-{#)#}
-{#</script>#}
 {% endblock %}

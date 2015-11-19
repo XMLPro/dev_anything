@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block body_main %}
+    <h4>統計</h4>
+    <canvas id="lineChartCanvas" height="450" width="600"></canvas>
+{% endblock %}
+{% block scriptarea %}
+    <script src="{{ url_for('static',filename='js/Chart.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jsonToukeiS.js')}}"></script>
+{% endblock %}
+

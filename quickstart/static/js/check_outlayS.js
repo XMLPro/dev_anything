@@ -39,9 +39,20 @@ $(function () {
                 }
             }
         });
-    $(li).click(function () {
-        $(this).css()
-    })
+    $('.shareContainer').on('click','li',function () {
+            $(this).css('background-color', 'red');
+            text = $(this).text();
+            alert(text);
+            $(".friendN").attr('value', text);
+        }
+    );
+    $('.sharContainer li').click(function () {
+        $(this).css('background-color', 'red');
+        text = $(this).text();
+        alert(text);
+        $(".friendN").attr('value', text);
+
+    });
 });
 
 

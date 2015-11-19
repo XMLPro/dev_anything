@@ -5,18 +5,19 @@ from functools import wraps
 from flask import Flask, request, session, g, redirect, url_for, render_template
 
 import json
+import datetime
+import re
 from SpendTableManage import SpendTableManage
 from userTableManage import userTableManage
 from SNotification import SNotification
 from friendManage import friend
 from SpendShareManage import SpendShareManage
 from IncomeTableManage import IncomeTableManage
-from groupTableManage import groupTableManage
 
 
 
 # 各種設定
-DATABASE = 'culc.db'
+DATABASE = 'C:\\Users\\Admin\\PycharmProjects\\culc_M\\culc.db'
 DEBUG = True
 SECRET_KEY = 'development key'
 
@@ -56,9 +57,8 @@ def before_request():
     g.spend = SpendTableManage(g.db)
     g.snoti = SNotification(g.db)
     g.friend = friend(g.db)
-    g.share = SpendShareManage(g.db)
+    g.share = SpendShareManage(g.db);
     g.income = IncomeTableManage(g.db)
-    g.groupdata = groupTableManage(g.db)
 
 
 @app.teardown_request
@@ -176,6 +176,36 @@ def add_income():
 @reqire_login
 def add_i():
     return render_template('addIncome.html')
+
+
+# 統計のページ
+@app.route('/jsonToukei')
+@reqire_login
+def jsonTokei():
+    return render_template('jsonToukei.html')
+
+
+# リクエストを受けたらjsonオブジェクトを返す
+@app.route('/jsonGet', methods=['POST'])
+@reqire_login
+def jsonGet():
+    d = datetime.datetime.today()
+    strday = str(d.year)
+    data = (
+        "January, " + strday, "February, " + strday, "March, " + strday, "April, " + strday, "May, " + strday,
+        "June, " + strday, "July, " + strday, "August, " + strday, "September, " + strday, "October, " + strday,
+        "November, " + strday, "Decembar, " + strday)
+    sum = []
+    userData = g.spend.entrySerch(session.get('username'))
+    jRe = {}
+    for p in data:
+        sum = 0
+        for d in userData:
+            if d['day'].find(p) != -1:
+                sum += int(d['money'])
+        print(sum)
+        jRe[p] = sum
+    return json.dumps(jRe)
 
 
 # 収入確認
@@ -299,40 +329,16 @@ def g_add_i():
 def g_check_i():
     return render_template('gCheckIncome.html')
 
-@app.route('/g_set')
+
+@app.route('/group_setting')
 def g_set():
     return render_template('gSetting.html')
 
-@app.route('/g_add_o')
-def g_add_o():
-    return render_template('gSetting.html')
 
-@app.route('/g_login', methods=['POST','GET'])
+@app.route('/g_login')
 def g_login():
-    if request.method == 'POST':
-        if g.groupdata.entryVerif(request.form['groupname'], request.form['username']):
-            session['g_logged_in'] = True
-            session['username'] = request.form['groupname']
-        return redirect(url_for('index'))
     return render_template('gLogin.html')
 
-
-@app.route('/g_regi', methods=['GET', 'POST'])
-def g_regi():
-    if request.method == 'POST':
-        g.groupdata.entryAdd(request.form['groupname'], request.form['username'])
-        session['g_logged_in'] = True
-        session['username'] = request.form['groupname']
-        return redirect(url_for('index'))
-    return render_template('gRegistered.html')
-
-@app.route('/groupadd', methods=['POST'])
-def groupadd():
-    if request.method == 'POST':
-        g.groupdata.entryAdd(request.form['groupname'], request.form['username'])
-        session['g_logged_in'] = True
-        session['username'] = request.form['groupname']
-        return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run()
